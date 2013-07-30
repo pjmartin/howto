@@ -79,7 +79,7 @@ create a config-file to make your remote connect easier edit `~/.ssh/config`
 		LocalForward localhost:8080 192.168.200.40:8080 # Forward localhost:8080 to 192.168.200.40:8080
 		LocalForward 192.168.1.12:8443 172.16.77.12:443	# Listen on port 8443 on local ip
 
-##### SSH console
+##### SSH Tunneling
 
 Use your local key for connection to 192.168.100.20 and then jump to 192.168.200.20 with key from local machine
 
@@ -105,6 +105,8 @@ There are three possibilities for tunnelling :
         # This will open a tunnel from localhost to host1 through which the SSH service on 
         # host2 can be used. Then a second tunnel is opened from localhost to host2 through the first tunnel.
         
+    [Source](http://superuser.com/questions/96489/ssh-tunnel-via-multiple-hops)
+    
 ## User Administratoion
 
 
