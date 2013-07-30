@@ -110,12 +110,35 @@ There are three possibilities for tunnelling :
 ## User Administratoion
 
 
-Add User: `useradd patrik` will add a user with a GUID to `/etc/passwd` and a home folder.
+Add User: `# useradd patrik` will add a user with a GUID to `/etc/passwd` and a home folder.
 
-Add group: `usermod -G wheel,sshusers -a patrik` will add patrik to the wheel and sshusers group.
+Add group: `# usermod -G wheel,sshusers -a patrik` will add patrik to the wheel and sshusers group.
 
 display users groups: `groups patrik` 
+
+See who is logged in: `who`
+
+Advanced adduser `# useradd -g users -G wheel,sshusers -d /home/user01 -m -c "Patrik - Admin" -s /bin/bash -p '$1$01UBH4p3$sY7PTSrW1rdfQ68E1' patrik`
+
+`-g` = default group
+
+`-G` = other groups
+
+`-d` = home directory
+
+`-m` = create home directory
+
+`-c` = comment
+
+`-s` = shell
+
+`-p` = crytp password, can be copied from other `/etc/shadow` file
 	
+set password: `passwd patrik`
+
+##### User expiration
+
+
 ## Sudo
 
 
