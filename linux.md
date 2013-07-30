@@ -62,13 +62,49 @@ create a script in `~/.bashrc`or `~/.bash_profile` and let it automatically star
 	local$ ssh-agent bash
 	local$ ssh-add .ssh/id_rsa
 	
+##### SSH Config
 
-**SSH Jump**
+create a config-file to make your remote connect easier edit `~/.ssh/config`
 
-Use your ssh key from local machine to logon to 
+	Host git.mydomain.com
+    	User git
+    	HostName 192.168.100.11
+    	IdentityFile ~/.ssh/id_rsa
+    	IdentitiesOnly yes
 
-	ssh -A -t 192.168.100.20 ssh -A -t 192.168.200.20
+	host forwarder
+		HostName 192.168.100.12
+		User patrik
+		IdentityFile ~/.ssh/id_rsa
+		LocalForward localhost:8080 192.168.200.40:8080 # Forward localhost:8080 to 192.168.200.40:8080
+		LocalForward 192.168.1.12:8443 172.16.77.12:443	# Listen on port 8443 on local ip
 
+##### SSH console
+
+Use your local key for connection to 192.168.100.20 and then jump to 192.168.200.20 with key from local machine
+
+	$ ssh -A -t 192.168.100.20 ssh -A -t 192.168.200.20
+
+There are three possibilities for tunnelling :
+
+   1. Tunnel from localhost to host1:
+
+        ssh -L 9999:host2:1234 -N host1
+        connection from host1 to host2 will not be secured.
+
+   2. Tunnel from localhost to host1 and from host1 to host2:
+
+        ssh -L 9999:localhost:9999 host1 ssh -L 9999:localhost:1234 -N host2
+        # This will open a tunnel from localhost to host1 and another tunnel from host1 to host2.
+        # However the port 9999 to host2:1234 can be used by anyone on host1. This may or may not be a problem.
+
+   3. Tunnel from localhost to host1 and from localhost to host2:
+
+        ssh -L 9998:host2:22 -N host1
+        ssh -L 9999:localhost:1234 -N -p 9998 localhost
+        # This will open a tunnel from localhost to host1 through which the SSH service on 
+        # host2 can be used. Then a second tunnel is opened from localhost to host2 through the first tunnel.
+        
 ## User Administratoion
 
 
