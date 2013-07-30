@@ -118,7 +118,8 @@ display users groups: `groups patrik`
 
 See who is logged in: `who`
 
-Advanced adduser `# useradd -g users -G wheel,sshusers -d /home/user01 -m -c "Patrik - Admin" -s /bin/bash -p '$1$01UBH4p3$sY7PTSrW1rdfQ68E1' patrik`
+Advanced adduser `# useradd -g users -G wheel,sshusers -d /home/user01 -m 
+	-c "Patrik - Admin" -s /bin/bash -p '$1$01UBH4p3$sY7PTSrW1rdfQ68E1' patrik`
 
 `-g` = default group
 
@@ -140,7 +141,6 @@ set password: `passwd patrik`
 
 
 ## Sudo
-
 
 
 
