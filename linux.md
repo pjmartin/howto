@@ -118,8 +118,7 @@ display users groups: `groups patrik`
 
 See who is logged in: `who`
 
-Advanced adduser `# useradd -g users -G wheel,sshusers -d /home/user01 -m 
-	-c "Patrik - Admin" -s /bin/bash -p '$1$01UBH4p3$sY7PTSrW1rdfQ68E1' patrik`
+Advanced adduser `# useradd -g users -G wheel,sshusers -d /home/user01 -m -c "Comment" -s /bin/bash -p 'Crypt-PWD' patrik`
 
 `-g` = default group
 
@@ -137,7 +136,11 @@ Advanced adduser `# useradd -g users -G wheel,sshusers -d /home/user01 -m
 	
 set password: `passwd patrik`
 
-##### User expiration
+##### Password Ageing
+
+	chage -M 90 username	# The password will expire in 90 Days.
+	chage -M 99999 -E 99999 username		#The password never expires
+	passwd -e username		# Expire the current password. Useful for password resets and new accounts.
 
 
 ## Sudo
