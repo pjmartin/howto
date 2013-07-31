@@ -146,7 +146,23 @@ set password: `passwd patrik`
 
 ## Sudo
 
+Administrators have the privilege to become root or use sudo command. To set up sudo users
+you type the command `visudo` as root or `sudo visudo` if you are a sudoer.
 
+Basically there are two lines which specify the sudoers. First is all users in wheel group
+can use sudo with pasword. The second line is that all users in wheel can use sudo without
+a password. But the easy way is never recommended.
+
+	## Allows people in group wheel to run all commands
+	%wheel  ALL=(ALL)       ALL
+
+	## Same thing without a password
+	# %wheel        ALL=(ALL)       NOPASSWD: ALL
+
+Sudo makes you get to do super user stuff that root does. Usually you put sudo before a 
+command like `sudo service network restart` to be able to restart the network
+
+To get a root shell account with sudo you use
 
 ## Networking
 
