@@ -36,7 +36,7 @@ turn off password login `/etc/ssh/sshd_config`
 Create a certificate for the user
 
 	$ ssh-keygen -t rsa -C "User Name"
-
+	
 set private key permission in user home directory
 
 	local$ chmod 700 ~/.ssh
@@ -49,7 +49,7 @@ Copy public key to server
 		*or if you are on your own computer and send you public key to remote server*
 	local$ ssh-copy-id username@remoteserver-ip
 		*or just copy content of id_rsa.pub to authorized_keys on remote server*
-
+		
 set public key permissions.
 
 	server$ chmod 700 ~/.ssh
@@ -61,7 +61,7 @@ create a script in `~/.bashrc`or `~/.bash_profile` and let it automatically star
 
 	local$ ssh-agent bash
 	local$ ssh-add .ssh/id_rsa
-
+	
 ##### SSH Config
 
 create a config-file to make your remote connect easier edit `~/.ssh/config`
@@ -104,9 +104,9 @@ There are three possibilities for tunnelling :
         ssh -L 9999:localhost:1234 -N -p 9998 localhost
         # This will open a tunnel from localhost to host1 through which the SSH service on 
         # host2 can be used. Then a second tunnel is opened from localhost to host2 through the first tunnel.
-
-[Source](http://superuser.com/questions/96489/ssh-tunnel-via-multiple-hops)
-
+        
+    [Source](http://superuser.com/questions/96489/ssh-tunnel-via-multiple-hops)
+    
 ## User Administratoion
 
 
@@ -133,7 +133,7 @@ Advanced adduser `# useradd -g users -G wheel,sshusers -d /home/user01 -m -c "Co
 `-s` = shell
 
 `-p` = crytp password, can be copied from other `/etc/shadow` file
-
+	
 set password: `passwd patrik`
 
 ##### Password Ageing
