@@ -147,7 +147,8 @@ set password: `passwd patrik`
 ## Sudo
 
 Administrators have the privilege to become root or use sudo command. To set up sudo users
-you type the command `visudo` as root or `sudo visudo` if you are a sudoer.
+you type the command `visudo` as root or `sudo visudo` if you are a sudoer. This command 
+opens the `/etc/sudoers` file and lets you edit it.
 
 Basically there are two lines which specify the sudoers. First is all users in wheel group
 can use sudo with pasword. The second line is that all users in wheel can use sudo without
@@ -162,7 +163,18 @@ a password. But the easy way is never recommended.
 Sudo makes you get to do super user stuff that root does. Usually you put sudo before a 
 command like `sudo service network restart` to be able to restart the network
 
-To get a root shell account with sudo you use
+The following will allow Patrik and Bob to run specific commands as sudo.
+
+	User_Alias ADMINS = alice, bob
+	Cmnd_Alias LOCATE = /usr/bin/updatedb
+	Cmnd_Alias NETWORKING = /sbin/route, /sbin/ifconfig, /bin/ping, /sbin/dhclient, /usr/bin/net, /sbin/iptables,
+                        /usr/bin/rfcomm, /usr/bin/wvdial, /sbin/iwconfig, /sbin/mii-tool
+	ADMINS ALL = LOCATE, NETWORKING 
+
+To get a root shell account with sudo you use the command `sudo -s` It will give you root
+privileges but the $PATH will still be the same as the user who did the sudo command. To 
+get a real root shell with correct path you should run the command `su -`
+
 
 ## Networking
 
