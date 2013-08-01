@@ -288,7 +288,7 @@ Add the NAT rules to IPtables eth0 = outside, eth1 = inside
 	# iptables -A FORWARD -i eth1 -o eth0 -j ACCEPT
 
 
-## X Windows
+## X11 Forwarding
 
 To install xwindows on a centos minimal
 
