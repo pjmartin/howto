@@ -224,6 +224,53 @@ If you want to configure it with a static ip it would look more like this.
 	
 ## Yum repositories
 
+Yum or Yellow dog Update, Modified is a package manager for RPMs. Yum searches repositories
+for packages and dependencies so its more effortless to install RPM packages without ending
+in repository hell.
+
+Yum uses the configuration file `/etc/yum.conf` in this file the main configuration of yum
+is set.
+
+To add the epel repo do the following.
+
+*Centos 5.x*
+
+	wget http://dl.fedoraproject.org/pub/epel/5/x86_64/epel-release-5-4.noarch.rpm
+	wget http://rpms.famillecollet.com/enterprise/remi-release-5.rpm
+	sudo rpm -Uvh remi-release-5*.rpm epel-release-5*.rpm
+	
+*Centos 6.x*
+
+	wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+	wget http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
+	sudo rpm -Uvh remi-release-6*.rpm epel-release-6*.rpm
+
+
+	$ ls -1 /etc/yum.repos.d/epel* /etc/yum.repos.d/remi.repo
+	/etc/yum.repos.d/epel.repo
+	/etc/yum.repos.d/epel-testing.repo
+	/etc/yum.repos.d/remi.repo
+
+*Enable the remi repository*
+
+The remi repository provides a variety of up-to-date packages that are useful or are a 
+requirement for many popular web-based services.  That means it generally is not a bad 
+idea to enable the remi repositories by default.
+
+	Change the enabled=1 
+
+	sudo vim /etc/yum.repos.d/remi.repo
+
+	name=Les RPM de remi pour Enterprise Linux $releasever - $basearch
+	#baseurl=http://rpms.famillecollet.com/enterprise/$releasever/remi/$basearch/
+	mirrorlist=http://rpms.famillecollet.com/enterprise/$releasever/remi/mirror
+	enabled=1
+	gpgcheck=1
+	gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-remi
+	failovermethod=priority
+
+You will now have a larger array of yum repositories to install from.
+
 ## IPtables
 
 ## NAT/Routing
@@ -245,38 +292,7 @@ Add the NAT rules to IPtables eth0 = outside, eth1 = inside
 ---------------
 
 
-Centos 5.x
 
-wget http://dl.fedoraproject.org/pub/epel/5/x86_64/epel-release-5-4.noarch.rpm
-wget http://rpms.famillecollet.com/enterprise/remi-release-5.rpm
-sudo rpm -Uvh remi-release-5*.rpm epel-release-5*.rpm
-Centos 6.x
-
-wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
-wget http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
-sudo rpm -Uvh remi-release-6*.rpm epel-release-6*.rpm
-
-
-$ ls -1 /etc/yum.repos.d/epel* /etc/yum.repos.d/remi.repo
-/etc/yum.repos.d/epel.repo
-/etc/yum.repos.d/epel-testing.repo
-/etc/yum.repos.d/remi.repo
-Enable the remi repository
-
-The remi repository provides a variety of up-to-date packages that are useful or are a requirement for many popular web-based services.  That means it generally is not a bad idea to enable the remi repositories by default.
-
-	Change the enabled=1 
-
-sudo vim /etc/yum.repos.d/remi.repo
-
-name=Les RPM de remi pour Enterprise Linux $releasever - $basearch
-#baseurl=http://rpms.famillecollet.com/enterprise/$releasever/remi/$basearch/
-mirrorlist=http://rpms.famillecollet.com/enterprise/$releasever/remi/mirror
-enabled=1
-gpgcheck=1
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-remi
-failovermethod=priority
-You will now have a larger array of yum repositories to install from.
 
 
 
