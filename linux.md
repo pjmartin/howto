@@ -283,25 +283,25 @@ Edit `/etc/sysctl.conf` with the line `net.ipv4.ip_forward=1`
 
 Add the NAT rules to IPtables eth0 = outside, eth1 = inside
 
-	# /sbin/iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
-	# /sbin/iptables -A FORWARD -i eth0 -o eth1 -m state --state RELATED,ESTABLISHED -j ACCEPT
-	# /sbin/iptables -A FORWARD -i eth1 -o eth0 -j ACCEPT
-
----------------
--- Epel Repo --
----------------
-
-
-
-
-
+	# iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+	# iptables -A FORWARD -i eth0 -o eth1 -m state --state RELATED,ESTABLISHED -j ACCEPT
+	# iptables -A FORWARD -i eth1 -o eth0 -j ACCEPT
 
 
 ## X Windows
 
-set sshd_config to allow remote X11
-run gnome-session
-If it desktop does not start su root and do following
-touch /var/run/console/<username>
-chmod 600 /var/run/console/<username>
-now try to run gnome-session again.
+To install xwindows on a centos minimal
+
+	# yum -y groupinstall "Desktop" "Desktop Platform" "X Window System" "Fonts"
+
+To remotely use xwindows through SSH shell configure `/etc/ssh/sshd_config`
+	
+	ForwardX11 yes
+	
+SSH to the machine and run the `gnome-session` command. If it desktop does not start do the 
+following on the remote machine with root privileges. `<username>` should be the name that you
+are trying to start x with. Then try to run `gnome-session` again.
+
+	# touch /var/run/console/<username>
+	# chmod 600 /var/run/console/<username>
+
