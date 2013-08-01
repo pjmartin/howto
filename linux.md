@@ -175,65 +175,70 @@ To get a root shell account with sudo you use the command `sudo -s` It will give
 privileges but the $PATH will still be the same as the user who did the sudo command. To 
 get a real root shell with correct path you should run the command `su -`
 
+source: [centos](http://wiki.centos.org/TipsAndTricks/BecomingRoot)
 
 ## Networking
 
+`/etc/hosts` contains hosts that can not be resolved in any 
+other way. It can contain hosts in a small network that doesn't have a DNS-server. 
+
+`/etc/resolv.conf` contains the dns servers and the search-domains so you dont have to write
+the whole fqdn if you are connecting to a server on the local network.
+
+`/etc/sysconfig/network` contain hostname and routing information like default gateway.
+
+for each network adapter on the machine there is a configuration file in 
+`/etc/sysconfig/network-scripts/ifcfg-<interfacename>`
+
+dhcp config could look like this
+
+	DEVICE=eth0
+	TYPE=Ethernet
+	ONBOOT=yes
+	BOOTPROTO=dhcp
+
+static cfg file could look like this. I usually skip DNS, gateway and hardware address here since 
+resolv.conf handles the dns and network file handles gateway.
+
+	DEVICE=eth0
+	BOOTPROTO=static
+	IPADDR=192.168.1.10
+	NETMASK=255.255.255.0
+	ONBOOT=yes
+
+*Staticroute*
+
+To add a static route you specify it on the interface that would be the outgoing port.
+for example you create a file called `/etc/sysconfig/network-scripts/route-<interfacename>`
+in this file you specify `network via gateway dev <interfacename>` you could specify your 
+default gateway in this file also but it would be a conflict if you have dhcp that distributes
+a different default gateway for that port.
+
+`/etc/sysconfig/network-scripts/route-eth0`
+
+	10.10.10.0/24 via 192.168.0.1 dev eth0
+
+	
+If you want to configure it with a static ip it would look more like this.
+
+	
 ## Yum repositories
 
 ## IPtables
 
 ## NAT/Routing
 
+Allow linux to forward IP-traffic
 
+	# echo 1 > /proc/sys/net/ipv4/ip_forward
 
-1.
---
-	echo 1 > /proc/sys/net/ipv4/ip_forward
+Edit `/etc/sysctl.conf` with the line `net.ipv4.ip_forward=1`
 
-2. /etc/sysctl.conf
-	net.ipv4.ip_forward=1
+Add the NAT rules to IPtables eth0 = outside, eth1 = inside
 
-3. eth0 = outside, eth1 = inside
 	# /sbin/iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 	# /sbin/iptables -A FORWARD -i eth0 -o eth1 -m state --state RELATED,ESTABLISHED -j ACCEPT
 	# /sbin/iptables -A FORWARD -i eth1 -o eth0 -j ACCEPT
-
-
-
-
-
--------------------------------
---    USER Administration    --
--------------------------------
-Add User:
-	useradd patrik
-
-Add group:
-	usermod -G wheel,sshusers -a patrik
-
-Show groups:
-	groups patrik
-
--------------------
---  Sudo users   --
--------------------
-Install sudo:
-	yum -y install sudo
-
-command: visudo 
-
-	## Allows people in group wheel to run all commands
-	%wheel  ALL=(ALL)       ALL
-
-------------------
--- Set hostname --
-------------------
-
-vim /etc/sysconfig/network 
-
-	NETWORKING=yes
-	HOSTNAME=bigboy
-	GATEWAY=192.168.1.1
 
 ---------------
 -- Epel Repo --
