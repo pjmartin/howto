@@ -251,7 +251,7 @@ To add the epel repo do the following.
 	/etc/yum.repos.d/epel-testing.repo
 	/etc/yum.repos.d/remi.repo
 
-*Enable the remi repository*
+_Enable the remi repository_
 
 The remi repository provides a variety of up-to-date packages that are useful or are a 
 requirement for many popular web-based services.  That means it generally is not a bad 
